@@ -63,6 +63,13 @@ func configFetch() {
 	decoder := yaml.NewDecoder(cfgFile)
 
 	err = decoder.Decode(&cfg)
+
+	// check if config has empty options
+	if cfg.API.Key == "" || cfg.Location.Latitude == "" || cfg.Location.Longitude == "" || cfg.Preferences.Unit == "" {
+		fmt.Println(aurora.Red("config file options empty?"))
+		os.Exit(1)
+	}
+
 	if err != nil {
 		if err.Error() == "EOF" {
 			fmt.Println(aurora.Red("malformed config"))
