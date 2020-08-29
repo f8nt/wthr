@@ -3,11 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/logrusorgru/aurora"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	"github.com/logrusorgru/aurora"
+	"gopkg.in/yaml.v2"
 )
 
 type config struct {
@@ -113,6 +114,13 @@ func getWeather(url string) weather {
 
 }
 
+// only god knows
+func wtf(x []struct{ Description string }) string {
+	str := fmt.Sprintf("%v", x)
+	str = str[2 : len(str)-2]
+	return str
+}
+
 func main() {
 	if !configCheck() {
 		fmt.Println(aurora.Red("Couldn't locate config file"))
@@ -128,5 +136,6 @@ func main() {
 	fmt.Println(j.Lat, "/", j.Lon)
 	fmt.Println(j.Timezone)
 	fmt.Println("it feels like", j.Current.Feels_like)
-	fmt.Println(j.Current.Weather)
+	fmt.Println(wtf(j.Current.Weather))
+
 }
