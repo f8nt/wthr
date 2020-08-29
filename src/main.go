@@ -47,9 +47,8 @@ func configCheck() bool {
 
 	if _, err := os.Stat(usrCFG); err == nil {
 		return true
-	} else if os.IsNotExist(err) {
-		return false
 	}
+
 	return false
 }
 
@@ -108,7 +107,11 @@ func getWeather(url string) weather {
 }
 
 func main() {
-	configCheck()
+	if !configCheck() {
+		fmt.Println(aurora.Red("Couldn't locate config file"))
+		os.Exit(1)
+	}
+
 	configFetch()
 
 	url := "https://api.openweathermap.org/data/2.5/onecall?lat=" + cfg.Location.Latitude + "&lon=" + cfg.Location.Longitude + "&exclude=minutely,hourly,daily" + "&units=" + cfg.Preferences.Unit + "&appid=" + cfg.API.Key

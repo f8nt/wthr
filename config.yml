@@ -1,0 +1,11 @@
+api:
+  key: "your OpenWeatherMap API key"
+
+location:
+  # lat / lon
+  latitude:  00.000000
+  longitude: 00.000000
+
+preferences:
+  # metric / imperial
+  unit: "imperial"
